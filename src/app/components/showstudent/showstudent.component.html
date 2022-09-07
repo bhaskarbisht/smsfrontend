@@ -1,0 +1,107 @@
+<br />
+<div class="container">
+  <table class="table table-striped border-warning">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="col-2">Student ID</th>
+        <th scope="col" class="col-2">First Name</th>
+        <th scope="col" class="col-2">Last Name</th>
+        <th scope="col" class="col-2">Standard</th>
+        <th scope="col" class="col-2">DOB</th>
+        <th scope="col" class="col-2">Subject</th>
+        <th scope="col" class="col-1" >Delete</th>
+        <th scope="col" class="col-1">Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+        <td>{{ student.id }}</td>
+        <td>{{ student.firstName }}</td>
+        <td>{{ student.lastName }}</td>
+        <td>{{ student.standard }}</td>
+        <td>{{ student.dob }}</td>
+        <td>{{ student.subject }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteStudent(student.id)">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-trash3-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"
+              />
+            </svg>
+          </button>
+        </td>
+        <td>
+          <button
+            class="btn btn-success"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            id="myModal"
+            (click)="editStudent(student)"
+          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+          </svg>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Student</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       
+        <form class="p-4 p-md-5 border rounded-3 bg-light">
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="id" name="id" [(ngModel)]="fillStudent.id" disabled placeholder="ID ">
+            <label for="standard">ID</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="firstname"  name="firstname" [(ngModel)]="fillStudent.firstName" placeholder="First Name">
+            <label for="firstname">First Name</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="lastname" name="lastname" [(ngModel)]="fillStudent.lastName" placeholder="Last Name">
+            <label for="lastname">Last Name</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="standard" name="standard" [(ngModel)]="fillStudent.standard"  placeholder="Standard ">
+            <label for="standard">Standard</label>
+          </div>
+         
+          <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="dob" name="dob" [(ngModel)]="fillStudent.dob" placeholder="dob ">
+            <label for="dob">Date of Birth</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="subject" name="subject"  [(ngModel)]="fillStudent.subject" placeholder="subject ">
+            <label for="subject">Favourite Subject</label>
+          </div>
+          
+
+
+          <button class="w-100 btn btn-lg btn-primary" (click)="updateStudent(fillStudent.id)" type="submit">Update Student</button>
+          <button type="button" class="w-100 btn btn-lg btn-secondary mt-2" data-bs-dismiss="modal">Close</button>
+
+          <hr class="my-4">
+        </form>
+      </div>
+     
+    </div>
+  </div>
+</div>
