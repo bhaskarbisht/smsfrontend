@@ -5,36 +5,29 @@ import Student from 'src/app/Entity/Student';
 @Component({
   selector: 'app-addstudent',
   templateUrl: './addstudent.component.html',
-  styleUrls: ['./addstudent.component.css']
+  styleUrls: ['./addstudent.component.css'],
 })
 export class AddstudentComponent implements OnInit {
+  student: Student = new Student();
 
-  student:Student=new Student();
+  alert: boolean = false;
 
-  saveStudent(){
- 
-    const observable=this.createstudentservice.createStudent(this.student);
+  saveStudent() {
+    const observable = this.createstudentservice.createStudent(this.student);
     observable.subscribe(
-      (response:any)=>{
-        alert("Student saved Successfully")
+      (response: any) => {
+        // alert("Student saved Successfully")
+        this.alert = true;
         console.log(response);
       },
-      function(error){
+      function (error) {
         console.log(error);
-        alert("Student Not saved");
+        alert('Student Not saved');
       }
-    )
+    );
   }
 
+  constructor(public createstudentservice: CreatestudentService) {}
 
-
- 
-
-
-  constructor(public createstudentservice:CreatestudentService) { }
-
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

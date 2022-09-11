@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<div class="container searchTable ">
+<div *ngIf="showtableid" class="container searchTable ">
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
@@ -53,7 +53,7 @@
   </table>
 </div>
 
-<div class="container searchTableclass ">
+<div *ngIf="showtableclass"  class="container searchTableclass ">
     <table class="table table-striped">
       <thead class="thead-dark">
         <tr>

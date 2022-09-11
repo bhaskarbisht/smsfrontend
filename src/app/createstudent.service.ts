@@ -15,6 +15,8 @@ const SEARCH_BY_CLASSID="http://localhost:8095/standard/"
 })
 export class CreatestudentService {
 
+
+  //create a student
 createStudent(student:{
   firstName: string;
   lastName: string;
@@ -37,6 +39,7 @@ deleteStudent(id:number){
 
 }
 
+//update a student
 updateStudent(student:{
   firstName: string;
   lastName: string;
@@ -47,11 +50,12 @@ updateStudent(student:{
   return this.http.put(UPDATE_URL+id, student);
 }
 
+//search by id
 searchStudentById(id:number){
   return this.http.get(SEARCH_BY_ID+id);
 }
 
-
+//search by class id
 searchStudentByclassId(id:number){
   console.log("number"+id);
   return this.http.get(SEARCH_BY_CLASSID+id);

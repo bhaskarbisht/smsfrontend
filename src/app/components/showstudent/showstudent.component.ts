@@ -9,6 +9,25 @@ import Student from 'src/app/Entity/Student';
 })
 export class ShowstudentComponent implements OnInit {
   students: Student[] = [];
+  alertupdate: boolean = false;
+
+  toggle:boolean;
+  cardview: boolean = false;
+  listview: boolean = true;
+
+  closeList() {
+    if(this.toggle){
+      this.cardview=false;
+      this.listview=true;
+
+    }
+    else{
+     
+      this.cardview=true;
+      this.listview=false;
+    }
+
+  }
 
   fillStudent = {
     id: 0,
@@ -23,16 +42,16 @@ export class ShowstudentComponent implements OnInit {
     this.fillStudent = student;
   }
 
+  //delete student
   deleteStudent(id: number) {
     const observable = this.createstudentservice.deleteStudent(id);
     observable.subscribe((response: any) => {
       console.log(response);
-      alert('Student Deleted Successfully');
       this.ngOnInit();
-      //this.students.splice(index,1);
     });
   }
 
+  //update student
   updateStudent(id: number) {
     const observable = this.createstudentservice.updateStudent(
       this.fillStudent,
@@ -41,7 +60,7 @@ export class ShowstudentComponent implements OnInit {
     console.log(this.fillStudent);
     observable.subscribe(
       (response: any) => {
-        alert('Student Updated Successfully');
+        this.alertupdate = true;
         console.log(response);
         this.ngOnInit();
       },
@@ -52,12 +71,15 @@ export class ShowstudentComponent implements OnInit {
     );
   }
 
+  closeAlert() {
+    this.alertupdate = false;
+  }
+
   constructor(public createstudentservice: CreatestudentService) {}
 
   ngOnInit(): void {
     const promise = this.createstudentservice.getStudents();
     promise.subscribe((response) => {
-      // console.log(response);
       this.students = response as Student[];
       console.log(this.students);
     });

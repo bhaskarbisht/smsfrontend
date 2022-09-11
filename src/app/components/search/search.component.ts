@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CreatestudentService } from 'src/app/createstudent.service';
 import Student from 'src/app/Entity/Student';
 
-declare var jQuery: any;
-
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -11,69 +9,68 @@ declare var jQuery: any;
 })
 export class SearchComponent implements OnInit {
   id: number;
-  std:number;
+  std: number;
 
- student:Student=new Student();
- students:Student[]=[];
+  showtableid: boolean = false;
+  showtableclass: boolean = false;
 
+  student: Student = new Student();
+  students: Student[] = [];
 
-
-  tablehideshow() {
-    jQuery('.searchTable').hide();
-    jQuery('.searchTableclass').hide();
-  }
-
+  //search student by id
   getStudentbyid(id: number) {
     const promise = this.createstudentservice.searchStudentById(this.id);
     promise.subscribe(
       (response) => {
-        this.student=response as Student;
+        this.student = response as Student;
+        if (this.student == null) {
+          alert('Result Not found');
+          console.log(this.student);
+          this.showtableid = false;
+          this.showtableclass = false;
+        }
+        else{
         alert('Result found');
         console.log(this.student);
-        jQuery('.searchTable').show();
+        this.showtableid = true;
+        this.showtableclass = false;
+
+        }
       },
       function (error) {
         console.log(error);
+
         alert('Result Not Found');
-        jQuery('.searchTable').hide();
       }
     );
   }
 
-
+  //search student by class id
   getStudentbyclassid(std: number) {
     const promise = this.createstudentservice.searchStudentByclassId(this.std);
     promise.subscribe(
       (response) => {
-        this.students=response as Student[];
-        
+        this.students = response as Student[];
+
         console.log(this.students.length);
-        if(this.students.length===0){
-          alert("No Record Found");
-          jQuery('.searchTableclass').hide();
-          jQuery('.searchTable').hide();
+        if (this.students.length === 0) {
+          alert('No Record Found');
+          this.showtableclass = false;
+          this.showtableid = false;
+        } else {
+          alert('Result found');
+          this.showtableclass = true;
+          this.showtableid = false;
         }
-          else{
-            alert('Result found');
-            jQuery('.searchTableclass').show();
-            jQuery('.searchTable').hide();
-          }
-         
-        
-          
-        
       },
       function (error) {
         console.log(error);
         alert('Result Not Found');
-        jQuery('.searchTableclass').hide();
       }
     );
   }
 
   constructor(public createstudentservice: CreatestudentService) {}
 
-  ngOnInit(): void {
-    this.tablehideshow();
-  }
+  ngOnInit(): void {}
 }
